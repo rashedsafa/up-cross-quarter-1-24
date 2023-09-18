@@ -21,5 +21,5 @@ $ npm run start:dev
 - Create: POST `http://localhost:3000/api/users/`
 - Read: GET `http://localhost:3000/api/users/`
 - Read-one: GET `http://localhost:3000/api/users/:id`
-- Edit: PUT `http://localhost:3000/api/users/:id`
+- Update: PUT `http://localhost:3000/api/users/:id`
 - Delete: DELETE `http://localhost:3000/api/users/:id`
