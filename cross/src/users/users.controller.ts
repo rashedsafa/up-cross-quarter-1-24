@@ -14,8 +14,8 @@ import { UsersService } from './users.service';
 import { Request, Response } from 'express';
 import { Users } from './users.model';
 
-@Controller('api/v1/users')
-export class BookController {
+@Controller('api/users/')
+export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
@@ -24,6 +24,7 @@ export class BookController {
     @Res() response: Response,
   ): Promise<any> {
     const result = await this.usersService.getAllUser();
+    console.log(result);
     return response.status(200).json({
       status: 'Ok!',
       message: 'Successfully fetch data!',
