@@ -1,40 +1,39 @@
 import React, { useState } from "react";
 import { Input, Button, Card, Space } from "antd";
 import LoadingCard from "./LoadingCard";
-import { History } from "history";
+import { useSelector, useDispatch } from "react-redux";
+import { createPost } from "../feature/postSlice";
 
-interface CreatePostProps {
-  history: History;
-}
+const CreatePost = ({ history }) => {
+  const [values, setValues] = useState({ title: "", body: "" });
+  const dispatch = useDispatch();
+  const { loading, post } = useSelector((state) => ({ ...state.app }));
 
-const CreatePost: React.FC<CreatePostProps> = ({ history }) => {
   const [showPost, setShowPost] = useState(false);
-  const [values, setValues] = useState<{ title: string; body: string }>({
-    title: "",
-    body: "",
-  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(createPost({ values }));
     setValues({ title: "", body: "" });
+    setShowPost(true);
   };
 
-  // const showPostBlog = () => {
-  //   return (
-  //     <>
-  //       {loading ? (
-  //         <LoadingCard count={1} />
-  //       ) : (
-  //         <div className="site-card-border-less-wrapper">
-  //           <Card type="inner" title={post[0].title}>
-  //             <p>User Id: {post[0].id}</p>
-  //             <span>{post[0].body}</span>
-  //           </Card>
-  //         </div>
-  //       )}
-  //     </>
-  //   );
-  // };
+  const showPostBlog = () => {
+    return (
+      <>
+        {loading ? (
+          <LoadingCard count={1} />
+        ) : (
+          <div className="site-card-border-less-wrapper">
+            <Card type="inner" title={post[0].title}>
+              <p>User Id: {post[0].id}</p>
+              <span>{post[0].body}</span>
+            </Card>
+          </div>
+        )}
+      </>
+    );
+  };
 
   return (
     <>
@@ -44,9 +43,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ history }) => {
           <Input
             placeholder="Enter title"
             type="text"
-            onChange={(e) =>
-              setValues({ ...values, title: e.target.value })
-            }
+            onChange={(e) => setValues({ ...values, title: e.target.value })}
             value={values.title}
             style={{ width: "400px" }}
           />
@@ -54,9 +51,8 @@ const CreatePost: React.FC<CreatePostProps> = ({ history }) => {
           <br />
           <Input.TextArea
             placeholder="Enter Body"
-            onChange={(e) =>
-              setValues({ ...values, body: e.target.value })
-            }
+            type="text"
+            onChange={(e) => setValues({ ...values, body: e.target.value })}
             value={values.body}
             style={{ width: "400px" }}
             size="large"
@@ -73,7 +69,7 @@ const CreatePost: React.FC<CreatePostProps> = ({ history }) => {
       </form>
       <br />
       <br />
-      {/* {showPost && <div>{showPostBlog()}</div>} */}
+      {showPost && <div>{showPostBlog()}</div>}
     </>
   );
 };
