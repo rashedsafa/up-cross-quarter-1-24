@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getPost = createAsyncThunk("post/getPost ", async ({ id }) => {
-  return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`).then((res) =>
+  return fetch(`http://localhost:3000/api/users/${id}`).then((res) =>
     res.json()
   );
 });
@@ -9,7 +9,7 @@ export const getPost = createAsyncThunk("post/getPost ", async ({ id }) => {
 export const deletePost = createAsyncThunk(
   "post/deletePost ",
   async ({ id }) => {
-    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+    return fetch(`http://localhost:3000/api/users/${id}`, {
       method: "DELETE",
     }).then((res) => res.json());
   }
@@ -18,15 +18,15 @@ export const deletePost = createAsyncThunk(
 export const createPost = createAsyncThunk(
   "post/createPost ",
   async ({ values }) => {
-    return fetch(`https://jsonplaceholder.typicode.com/posts/`, {
+    return fetch(`http://localhost:3000/api/users`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        title: values.title,
-        body: values.body,
+        name: values.name,
+        bio: values.bio,
       }),
     }).then((res) => res.json());
   }
@@ -34,16 +34,16 @@ export const createPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   "post/updatePost ",
-  async ({ id, body, title }) => {
-    return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+  async ({ id, bio, name }) => {
+    return fetch(`http://localhost:3000/api/users/${id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        title,
-        body,
+        name,
+        bio,
       }),
     }).then((res) => res.json());
   }
@@ -56,13 +56,13 @@ const postSlice = createSlice({
     loading: false,
     error: null,
     edit: false,
-    body: "",
+    bio: "",
   },
   // create asyncThunk generate three life cycle (promise 1.pending,2 fulfilled, 3 rejected)
   reducers: {
     setEdit: (state, action) => {
       state.edit = action.payload.edit;
-      state.body = action.payload.body;
+      state.bio = action.payload.bio;
     },
   },
   extraReducers: {

@@ -10,7 +10,7 @@ const UserPost = ({ history }) => {
 
   const [id, setId] = useState();
   const [bodyText, setBodyText] = useState("");
-  const { loading, post, edit, body } = useSelector((state) => ({
+  const { loading, post, edit, bio } = useSelector((state) => ({
     ...state.app,
   }));
   const onChangeInput = (e) => {
@@ -27,8 +27,8 @@ const UserPost = ({ history }) => {
   };
 
   useEffect(() => {
-    setBodyText(body);
-  }, [body]);
+    setBodyText(bio);
+  }, [bio]);
 
   return (
     <div className="container">
@@ -80,18 +80,18 @@ const UserPost = ({ history }) => {
                           dispatch(
                             updatePost({
                               id: post[0].id,
-                              body: bodyText,
-                              title: post[0].title,
+                              bio: bodyText,
+                              name: post[0].name,
                             })
                           );
-                          dispatch(setEdit({ edit: false, body: "" }));
+                          dispatch(setEdit({ edit: false, bio: "" }));
                         }}
                       >
                         Save
                       </Button>
                       <Button
                         onClick={() =>
-                          dispatch(setEdit({ edit: false, body: "" }))
+                          dispatch(setEdit({ edit: false, bio: "" }))
                         }
                       >
                         Cancel
@@ -99,7 +99,7 @@ const UserPost = ({ history }) => {
                     </Space>
                   </>
                 ) : (
-                  <span>{post[0].body}</span>
+                  <span>{post[0].bio}</span>
                 )}
               </Card>
               <Space
@@ -123,7 +123,7 @@ const UserPost = ({ history }) => {
                 <Button
                   type="primary"
                   onClick={() =>
-                    dispatch(setEdit({ edit: true, body: post[0].body }))
+                    dispatch(setEdit({ edit: true, bio: post[0].bio }))
                   }
                 >
                   Edit

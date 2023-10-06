@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { createPost } from "../feature/postSlice";
 
 const CreatePost = ({ history }) => {
-  const [values, setValues] = useState({ title: "", body: "" });
+  const [values, setValues] = useState({ name: "", bio: "" });
   const dispatch = useDispatch();
   const { loading, post } = useSelector((state) => ({ ...state.app }));
 
@@ -14,7 +14,7 @@ const CreatePost = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createPost({ values }));
-    setValues({ title: "", body: "" });
+    setValues({ name: "", bio: "" });
     setShowPost(true);
   };
 
@@ -25,9 +25,9 @@ const CreatePost = ({ history }) => {
           <LoadingCard count={1} />
         ) : (
           <div className="site-card-border-less-wrapper">
-            <Card type="inner" title={post[0].title}>
+            <Card type="inner" title={post[0].name}>
               <p>User Id: {post[0].id}</p>
-              <span>{post[0].body}</span>
+              <span>{post[0].bio}</span>
             </Card>
           </div>
         )}
@@ -41,18 +41,18 @@ const CreatePost = ({ history }) => {
         <div className="container" style={{ marginTop: "20px" }}>
           <h1>Create Post</h1>
           <Input
-            placeholder="Enter title"
+            placeholder="Enter name"
             type="text"
-            onChange={(e) => setValues({ ...values, title: e.target.value })}
-            value={values.title}
+            onChange={(e) => setValues({ ...values, name: e.target.value })}
+            value={values.name}
             style={{ width: "400px" }}
           />
           <br />
           <br />
           <Input.TextArea
-            placeholder="Enter Body"
+            placeholder="Enter Bio"
             type="text"
-            onChange={(e) => setValues({ ...values, body: e.target.value })}
+            onChange={(e) => setValues({ ...values, bio: e.target.value })}
             value={values.body}
             style={{ width: "400px" }}
             size="large"
