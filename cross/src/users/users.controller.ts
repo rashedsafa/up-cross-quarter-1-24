@@ -19,12 +19,11 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async getAllBook(
+  async getAllUsers(
     @Req() request: Request,
     @Res() response: Response,
   ): Promise<any> {
     const result = await this.usersService.getAllUser();
-    console.log(result);
     return response.status(200).json({
       status: 'Ok!',
       message: 'Successfully fetch data!',
@@ -33,7 +32,7 @@ export class UsersController {
   }
 
   @Post()
-  async postBook(@Body() postData: Users): Promise<Users> {
+  async postUser(@Body() postData: Users): Promise<Users> {
     return this.usersService.createUser(postData);
   }
 
